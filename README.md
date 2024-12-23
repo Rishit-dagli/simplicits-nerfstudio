@@ -158,30 +158,30 @@ First train a model to simulate an example mesh, or directly download the pre-tr
 
 ```bash
 ns-train-simplicits --base-type mesh \
- --original-geometry assets/mesh/fox.obj \
-    --output-path mesh.safetensors \
- --device cuda \
-    --iters 10000 \
- --num-samples 1000000 \
-    --cubature-pts 2048 \
- --handles 5 \
-    --layers 9 \
- --batch-size 16 \
-    --start-lr 1e-3 \
- --end-lr 1e-5
+    --original-geometry assets/mesh/fox.obj \
+    --output-path mesh.safetensors \
+    --device cuda \
+    --iters 10000 \
+    --num-samples 1000000 \
+    --cubature-pts 2048 \
+    --handles 5 \
+    --layers 9 \
+    --batch-size 16 \
+    --start-lr 1e-3 \
+    --end-lr 1e-5
 ```
 
 Now simulate the mesh using the trained model, the following command opens up a viewer usually on http://localhost:7007/ (or some other port if that is occupied). Follow the instructions on [using the viewer](#using-the-viewer).
 
 ```bash
 ns-viewer-simplicits --base-type mesh \
- --original-geometry assets/mesh/fox.obj \
-    --model-path mesh.safetensors \
- --device cuda \
-    --handles 5 \
- --layers 9 \
-    --num-samples 1000000 \
- --num-steps 100
+    --original-geometry assets/mesh/fox.obj \
+    --model-path mesh.safetensors \
+    --device cuda \
+    --handles 5 \
+    --layers 9 \
+    --num-samples 1000000 \
+    --num-steps 100
 ```
 
 ## Gaussian Splat Example
@@ -195,8 +195,7 @@ You can optionally also train the model yourself with nerfstudio. Start by downl
 ```bash
 mkdir -p data/nerfstudio/
 cd data/nerfstudio/
-curl -L -o nerf-synthetic-dataset.zip \
- https://www.kaggle.com/api/v1/datasets/download/nguyenhung1903/nerf-synthetic-dataset
+curl -L -o nerf-synthetic-dataset.zip https://www.kaggle.com/api/v1/datasets/download/nguyenhung1903/nerf-synthetic-dataset
 unzip nerf-synthetic-dataset.zip
 rm nerf-synthetic-dataset.zip
 cd ../..
@@ -206,16 +205,16 @@ Then train a 3DGS,
 
 ```bash
 ns-train splatfacto-big \
- --pipeline.model.use-bilateral-grid True \
-    --data data/nerfstudio/nerf_synthetic/lego blender-data
+    --pipeline.model.use-bilateral-grid True \
+    --data data/nerfstudio/nerf_synthetic/lego blender-data
 ```
 
 Finally, make a `ply` export of the splat, make sure to replace the config file with the one you get from the training,
 
 ```bash
 ns-export gaussian-splat \
- --load-config outputs/lego/splatfacto/2024-12-22_232014/config.yml \
-    --output-dir exports/splat/
+    --load-config outputs/lego/splatfacto/2024-12-22_232014/config.yml \
+    --output-dir exports/splat/
 ```
 
 You can now train simplicits on the `.ply` file you get from the export by changing the argument `--original-geometry`.
@@ -225,38 +224,38 @@ First, train a model to simulate an example Gaussian Splat, or directly download
 
 ```bash
 ns-train-simplicits --base-type gs \
- --original-geometry 3dgs_dozer.ply \
-    --output-path gs.safetensors \
- --device cuda \
-    --iters 20000 \
- --num-samples 2048 \
-    --cubature-pts 2048 \
- --handles 40 \
-    --layers 10 \
- --batch-size 16 \
-    --start-lr 1e-3 \
- --end-lr 1e-3 \
-    --soft-youngs-modulus 21000 \
- --poisson-ratio 0.45 \
-    --rho 100 \
- --approx-volume 3
+    --original-geometry 3dgs_dozer.ply \
+    --output-path gs.safetensors \
+    --device cuda \
+    --iters 20000 \
+    --num-samples 2048 \
+    --cubature-pts 2048 \
+    --handles 40 \
+    --layers 10 \
+    --batch-size 16 \
+    --start-lr 1e-3 \
+    --end-lr 1e-3 \
+    --soft-youngs-modulus 21000 \
+    --poisson-ratio 0.45 \
+    --rho 100 \
+    --approx-volume 3
 ```
 
 Now simulate the Gaussian Splat using the trained model, the following command opens up a viewer usually on http://localhost:7007/ (or some other port if that is occupied). Follow the instructions on [using the viewer](#using-the-viewer).
 
 ```bash
 ns-viewer-simplicits --base-type gs \
- --original-geometry 3dgs_dozer.ply \
-    --model-path gs.safetensors \
- --device cuda \
-    --handles 40 \
- --layers 10 \
-    --num-samples 2048 \
- --num-steps 100 \
-    --soft-youngs-modulus 15000 \
- --poisson-ratio 0.45 \
-    --rho 100 \
- --approx-volume 3
+    --original-geometry 3dgs_dozer.ply \
+    --model-path gs.safetensors \
+    --device cuda \
+    --handles 40 \
+    --layers 10 \
+    --num-samples 2048 \
+    --num-steps 100 \
+    --soft-youngs-modulus 15000 \
+    --poisson-ratio 0.45 \
+    --rho 100 \
+    --approx-volume 3
 ```
 
 Since this example is oriented differently make sure to set the Floor Axis to Z and Gravity Direction to Z, and then click on reset simulation in the viewer.
@@ -272,8 +271,7 @@ You can optionally also train the model yourself with nerfstudio. Start by downl
 ```bash
 mkdir -p data/nerfstudio/
 cd data/nerfstudio/
-curl -L -o nerf-synthetic-dataset.zip \
- https://www.kaggle.com/api/v1/datasets/download/nguyenhung1903/nerf-synthetic-dataset
+curl -L -o nerf-synthetic-dataset.zip https://www.kaggle.com/api/v1/datasets/download/nguyenhung1903/nerf-synthetic-dataset
 unzip nerf-synthetic-dataset.zip
 rm nerf-synthetic-dataset.zip
 cd ../..
@@ -283,8 +281,9 @@ Then train a NeRF, make sure to replace the `--original-geometry` argument with 
 
 ```bash
 ns-train instant-ngp-bounded \
- --data="data/nerfstudio/nerf_synthetic/lego/transforms_train.json" \ --steps-per-save=1000 \
-    --max-num-iterations=16500
+    --data="data/nerfstudio/nerf_synthetic/lego/transforms_train.json" \
+    --steps-per-save=1000 \
+    --max-num-iterations=16500
 ```
 </details>
 
@@ -292,40 +291,40 @@ First, train a model to simulate an example NeRF, or directly download the pre-t
 
 ```bash
 ns-train-simplicits --base-type nerf \
- --original-geometry outputs/lego/instant-ngp-bounded/2024-12-22_111233/config.yml \
-    --density-threshold 0.8 \
- --output-path nerf.safetensors \
-    --device cuda \
- --iters 20000 \
-    --num-samples 2048 \
- --cubature-pts 2048 \
-    --handles 40 \
- --layers 10 \
-    --batch-size 16 \
- --start-lr 1e-4 \
-    --end-lr 1e-5 \
- --soft-youngs-modulus 15000 \
-    --poisson-ratio 0.45 \
- --rho 100 \
-    --approx-volume 3
+    --original-geometry outputs/lego/instant-ngp-bounded/2024-12-22_111233/config.yml \
+    --density-threshold 0.8 \
+    --output-path nerf.safetensors \
+    --device cuda \
+    --iters 20000 \
+    --num-samples 2048 \
+    --cubature-pts 2048 \
+    --handles 40 \
+    --layers 10 \
+    --batch-size 16 \
+    --start-lr 1e-4 \
+    --end-lr 1e-5 \
+    --soft-youngs-modulus 15000 \
+    --poisson-ratio 0.45 \
+    --rho 100 \
+    --approx-volume 3
 ```
 
 Now simulate the NeRF using the trained model, the following command opens up a viewer usually on http://localhost:7007/ (or some other port if that is occupied). Follow the instructions on [using the viewer](#using-the-viewer).
 
 ```bash
 ns-viewer-simplicits --base-type nerf \
- --original-geometry outputs/lego/instant-ngp-bounded/2024-12-22_111233/config.yml \
-    --density-threshold 0.8 \
- --model-path nerf.safetensors \
-    --device cuda \
- --handles 40 \
-    --layers 10 \
- --num-samples 100000 \
-    --num-steps 100 \
- --soft-youngs-modulus 15000 \
-    --poisson-ratio 0.45 \
- --rho 100 \
-    --approx-volume 3
+    --original-geometry outputs/lego/instant-ngp-bounded/2024-12-22_111233/config.yml \
+    --density-threshold 0.8 \
+    --model-path nerf.safetensors \
+    --device cuda \
+    --handles 40 \
+    --layers 10 \
+    --num-samples 100000 \
+    --num-steps 100 \
+    --soft-youngs-modulus 15000 \
+    --poisson-ratio 0.45 \
+    --rho 100 \
+    --approx-volume 3
 ```
 
 Since this example is oriented differently make sure to set the Floor Axis to Z and Gravity Direction to Z, and then click on reset simulation in the viewer.
@@ -351,7 +350,7 @@ The "Point Cloud" and "Render Tracks" checkboxes are used to show the point clou
 
 <details><summary>Example</summary>
 
-![Viewer Point Cloud](assets/viewer_pc_track.png)
+![Viewer Point Cloud](assets/viewer_pc_tracks.png)
 </details>
 
 ## Tips
@@ -366,5 +365,11 @@ I share some tips on running the code and reproducing results.
 
 ### on compute
 
-- I have tested the code on A100 - 80 GB and RTX 4090 GPUs. I have not tested the code on other GPUs, however, I expect the code to work on other GPUs.
+- I have tested the code on A100 - 80 GB and RTX 4090 GPUs. I have not tested the code on other GPUs, however, I expect the code to work on other GPUs with atleast 24 GB VRAM.
 - For just training Simplicits you should not need more than 16 GB VRAM.
+
+### debugging
+
+- If you see some jitter in the simulation, try reducing the FPS in the viewer.
+- Rendering tracks can be slow, especially for large geometries, I recommend turning this off if you are running into performance issues.
+- Very rarely when starting the viewer I get some error with Viser, however this is flaky, and is always fixed by simply rerunning the viewer command. I haven't been able to figure out why this happens yet.
