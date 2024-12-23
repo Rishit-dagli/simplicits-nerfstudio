@@ -351,7 +351,7 @@ The "Point Cloud" and "Render Tracks" checkboxes are used to show the point clou
 
 <details><summary>Example</summary>
 
-![Viewer Point Cloud](assets/viewer_pc_tracks.png)
+![Viewer Point Cloud](assets/viewer_pc_track.png)
 </details>
 
 ## Tips
